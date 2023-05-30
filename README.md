@@ -24,7 +24,7 @@ For a version of the project that can run off a coin-cell battery for many month
 
 ## Notes
 
-## #Creating New Graphics
+### Creating New Graphics
 
 - Images should be 250px wide by 128px high
 - Use [this website](https://javl.github.io/image2cpp/) to convert the images, and the below settings:
