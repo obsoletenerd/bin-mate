@@ -8,7 +8,12 @@ The project can be as simple as buying an RPi Pico + a click-on e-Paper hat (see
 
 ![RPi Pico Bin Mate](https://github.com/obsoletenerd/Bin-Mate/blob/main/RPi%20Pico/Ballarat%20Bin%20Mate.jpg)
 
-This is the easiest way to get started with this project, using just an [RPi Pico W](https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html) (WiFi model) and a [Waveshare Pico e-Paper 2.13in Hat](https://www.waveshare.com/pico-epaper-2.13.htm). Install MicroPython onto the RPi Pico using Thonny (or your tool of choice), then edit your address and wifi details into the code, then copy the code onto the Pico. Plug it into any USB plug for power (or if you're RPi-savvy, wire up some batteries) and you're running.
+This is the easiest way to get started with this project, using just an [RPi Pico W](https://www.raspberrypi.com/documentation/microcontrollers/raspberry-pi-pico.html) (WiFi model) and a [Waveshare Pico e-Paper 2.13in Hat](https://www.waveshare.com/pico-epaper-2.13.htm).
+
+- Install MicroPython onto the RPi Pico using Thonny (or your tool of choice)
+- Open main.py in Thonny and edit your address and wifi details
+- Copy main.py onto the Pico
+- Plug it into any USB plug for power (or if you're RPi-savvy, wire up some batteries) and you're running.
 
 We have also designed a few different 3D printable cases or a laser-cut wooden case to pretty the project up, both of which take a magnet on the back to stick to your fridge or use double-sided tape to put it up wherever you want.
 
