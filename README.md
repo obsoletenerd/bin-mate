@@ -2,7 +2,7 @@
 
 Bin Mate is a multi-MCU (ESP32, RPi Pico, more soon) bin reminder tool. Initially for Ballarat in Victoria AU but hopefully rolling out to more cities soon. It is an open source software/hardware project connecting to local council APIs to remind you which bins to put out on which days.
 
-The project can be as simple as buying an RPi Pico + a click-on e-Paper hat (see "[/RPi Pico](https://github.com/obsoletenerd/Bin-Mate/tree/main/RPi%20Pico)"), up to a fully-custom PCB you can self-solder (Soon™) or buy as a kit (Soon™) that runs for months on a coin cell battery and sticks to your fridge with a magnet.
+The project can be as simple as buying an RPi Pico + a click-on e-Paper hat (see "[/RPi Pico](https://github.com/senwerks/Bin-Mate/tree/main/RPi%20Pico)"), up to a fully-custom PCB you can self-solder (Soon™) or buy as a kit (Soon™) that runs for months on a rechargeable battery or can be plugged in to any USB power.
 
 ## Raspberry Pi Pico W + Waveshare Pico e-Paper 2.13in Hat
 
@@ -26,16 +26,10 @@ If you do create this project, please share it with me either via Mastadon (http
 
 ## ESP32 + 2.9" e-Paper Module
 
-For a version of the project that can run off a coin-cell battery for many months, we're developing a custom PCB with an ESP32 onboard utilising all the deep sleep trickery, along with a cheap 2.9" e-Paper module, to create a device that can stick to your fridge/etc and requires no wiring, soldering, or coding. It will throw up its own Wifi AP with a dashboard for configuration and customisation. PCB designs and code will all be open-sourced and added here soon.
+For a version of the project that can run off a single battery for many months, we're developing a custom PCB with an ESP32 onboard utilising all the deep sleep trickery, along with a cheap 2.9" e-Paper module, that you will be able to order assembled or solder together yourself. It will throw up its own Wifi AP with a dashboard for configuration and customisation. PCB designs and code will all be open-sourced and added here soon.
 
 ## Notes
 
 ### Creating New Graphics
 
-- Images should be 250px wide by 128px high
-- Use [this website](https://javl.github.io/image2cpp/) to convert the images, and the below settings:
-  - Section 1. Select your image(s)
-  - Section 2. All settings in this section stay as default other than "Rotate Image 90 degrees"
-  - Section 4. Code output format to "Raw Bytes", Draw Mode to "Horizontal - 1 bit per pixel"
-  - Click "Generate Code"
-  - Paste into the appropriate area in the project code
+The project now uses PBM files for the graphics. You can do direct-replacement of my graphics by creating 3 BMP images that are 64px wide and 220 high (they're displayed sideways). Put the BMP files in the same folder as my [BMP-to-PBM script](https://github.com/senwerks/BMP-to-PBM) and run the script as per the instructions. Copy those outputted PBM files onto the RPi Pico in the /gfx folder, using the same names as the files already in there.

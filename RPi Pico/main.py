@@ -75,14 +75,13 @@ def show_results(day, date, bin1, bin2, epd):
     bin2logo = "/gfx/" + bin2.lower() + ".pbm"
 
     epd.fill(0xFF)
-    epd.text("Next Pick-Up:", 12, 8, 0x00)
-    epd.text(f"{day} {date}", 4, 18, 0x00)
+    epd.text("Next Pick-Up:", 4, 4, 0x00)
+    epd.text(f"{day} {date}", 4, 16, 0x00)
 
-    epd.text(bin1, 4, 40, 0x00)
-    pbm_draw(0, 50, bin1logo, epd, 0xFF)
-
-    epd.text(bin2, 4, 128, 0x00)
-    pbm_draw(0, 138, bin2logo, epd, 0xFF)
+    print(f"----- Drawing {bin1logo}")
+    pbm_draw(0, 28, bin1logo, epd, 0xFF)
+    print(f"----- Drawing {bin2logo}")
+    pbm_draw(64, 28, bin2logo, epd, 0xFF)
 
     epd.display(epd.buffer)
 
@@ -126,7 +125,9 @@ def main():
             bin_data_json = r.json()
         else:
             # Handle non-200 responses appropriately
-            raise Exception("Failed to fetch data: HTTP status code " + str(r.status_code))
+            raise Exception(
+                "Failed to fetch data: HTTP status code " + str(r.status_code)
+            )
     finally:
         r.close()  # Ensure the request is closed even if an error occurs
 

@@ -1,1 +1,3 @@
-RPi Pico/secrets.py
+secrets.py
+.vscode/
+__pycache__/
