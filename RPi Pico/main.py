@@ -6,15 +6,15 @@
 #   |-------------|---------------------------------------------|
 #   | Version     |   V0.9                                      |
 #   | Release     |   2023-02-24                                |
-#   | Updated     |   2024-03-26                                |
+#   | Updated     |   2024-04-03                                |
 #   '-------------'---------------------------------------------'
 
+# TODO: Better sleep/wake/re-run functionality (via button to refresh? external RTC with interrupt?)
 # TODO: Replicate basic functionality of ESP32 WiFi manager using https://github.com/miguelgrinberg/microdot
 #       Eg:
 #        - If no internet, throw up an AP with kiosk webpage to config wifi, show AP on display
 #        - If yes internet, serve webpage on local IP to edit address/wifi/etc and see debug info
 #        - Any other errors, show on the display (address not found, API down, etc)
-# TODO: Create final graphics/layout now that it all basically works
 
 from machine import Pin, SPI, lightsleep, RTC
 import framebuf
@@ -27,6 +27,8 @@ import secrets  # WiFi and User Details from secrets.py
 
 # Show the user we're doing work now...
 led = Pin("LED", Pin.OUT)
+
+sleeptimer = 1 * 60 * 60 * 1000  # 1 hour in milliseconds
 
 
 def do_wifi(epd):
@@ -51,7 +53,7 @@ def do_wifi(epd):
         return None
 
 
-def pbm_draw(x_pos, y_pos, file, epd, white):
+def pbm_draw(x_pos, y_pos, file, epd, colour):
     with open(file, "rb") as f:
         # Skip the 'P4\n' part of the header
         f.readline()
@@ -67,7 +69,7 @@ def pbm_draw(x_pos, y_pos, file, epd, white):
 
     # Use the blit method to draw the image at the specified position
     # Note: Ensure 'epd' and 'white' are correctly defined in your context
-    epd.blit(fbuf, x_pos, y_pos, white)
+    epd.blit(fbuf, x_pos, y_pos, colour)
 
 
 def show_results(day, date, bin1, bin2, epd):
@@ -79,9 +81,21 @@ def show_results(day, date, bin1, bin2, epd):
     epd.text(f"{day} {date}", 4, 16, 0x00)
 
     print(f"----- Drawing {bin1logo}")
-    pbm_draw(0, 28, bin1logo, epd, 0xFF)
+    pbm_draw(0, 36, bin1logo, epd, 0xFF)
     print(f"----- Drawing {bin2logo}")
-    pbm_draw(64, 28, bin2logo, epd, 0xFF)
+    pbm_draw(62, 36, bin2logo, epd, 0xFF)
+
+    epd.display(epd.buffer)
+
+
+def show_refreshing(epd):
+    refreshlogo = "/gfx/checking.pbm"
+
+    epd.fill(0xFF)
+    #epd.text("Stand By...", 4, 4, 0x00)
+
+    print(f"----- Drawing Refresh graphics")
+    pbm_draw(32, 26, refreshlogo, epd, 0xFF)
 
     epd.display(epd.buffer)
 
@@ -95,8 +109,11 @@ def show_error(epd, message1="", message2=""):
 
 
 def main():
+
     epd = EPD_2in13()
     epd.init(epd.full_update)
+
+    show_refreshing(epd)
 
     wlan = do_wifi(epd)
     if wlan is None:
@@ -177,16 +194,18 @@ def main():
     # Properly disconnect WiFi and prepare for sleep
     wlan.disconnect()
     wlan.active(False)
+    print("----- WiFi Disabled for sleep.")
 
     # Turn off LED to indicate we're done
     led.off()
 
     # Go to light sleep for 3 hours
     print("..zzZZZzz.. Going to sleep for 3 hours ..zzZZZzz.. ")
-    lightsleep(3 * 60 * 60 * 1000)  # 3 hours in milliseconds
+    lightsleep(sleeptimer)
 
 
 # Run the main function
 if __name__ == "__main__":
     while True:
         main()
+
