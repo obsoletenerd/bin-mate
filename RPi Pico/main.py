@@ -4,19 +4,19 @@
 #   | Description |   Which bins are being collected next?      |
 #   | Source      |   https://github.com/senwerks/Bin-Mate      |
 #   |-------------|---------------------------------------------|
-#   | Version     |   V0.9                                      |
+#   | Version     |   V1.0                                      |
 #   | Release     |   2023-02-24                                |
-#   | Updated     |   2024-04-03                                |
+#   | Updated     |   2024-08-23                                |
 #   '-------------'---------------------------------------------'
 
-# TODO: Better sleep/wake/re-run functionality (via button to refresh? external RTC with interrupt?)
 # TODO: Replicate basic functionality of ESP32 WiFi manager using https://github.com/miguelgrinberg/microdot
 #       Eg:
 #        - If no internet, throw up an AP with kiosk webpage to config wifi, show AP on display
 #        - If yes internet, serve webpage on local IP to edit address/wifi/etc and see debug info
 #        - Any other errors, show on the display (address not found, API down, etc)
 
-from machine import Pin, SPI, lightsleep, RTC
+from machine import Pin, SPI, lightsleep
+from time import sleep
 import framebuf
 import utime
 import network
@@ -28,8 +28,9 @@ import secrets  # WiFi and User Details from secrets.py
 # Show the user we're doing work now...
 led = Pin("LED", Pin.OUT)
 
-sleeptimer = 1 * 60 * 60 * 1000  # 1 hour in milliseconds
-
+# Set us up the button
+button = Pin(2, Pin.IN, Pin.PULL_UP)
+button_state = False
 
 def do_wifi(epd):
     rp2.country("AU")
@@ -199,13 +200,16 @@ def main():
     # Turn off LED to indicate we're done
     led.off()
 
-    # Go to light sleep for 3 hours
-    print("..zzZZZzz.. Going to sleep for 3 hours ..zzZZZzz.. ")
-    lightsleep(sleeptimer)
-
+    # Go into light sleep and wait for button press
+    print("----- Going into lightsleep. Press the button to wake up.")
+    lightsleep()
 
 # Run the main function
 if __name__ == "__main__":
     while True:
         main()
 
+        # Wait for button press to reset and get new data
+        print("Waiting for button press to refresh...")
+        while button.value():
+            sleep(0.1)

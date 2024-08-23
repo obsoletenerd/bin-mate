@@ -2,16 +2,17 @@
 
 **Bin Mate** is a multi-MCU (ESP32, RPi Pico, more soon) bin reminder tool. Initially for Ballarat in Victoria AU but hopefully rolling out to more cities soon. It is an open source software/hardware project connecting to local council APIs to remind you which bins to put out on which days.
 
-The project can be as simple as buying an RPi Pico + a click-on e-Paper hat (see "[/RPi Pico](https://github.com/senwerks/Bin-Mate/tree/main/RPi%20Pico)"), up to a fully-custom PCB you can self-solder (Soon™) or buy as a kit (Soon™) that runs for months on a rechargeable battery or can be plugged in to any USB power.
+The project can be as simple as buying an RPi Pico + a click-on e-Paper hat (see "[/RPi Pico](https://github.com/senwerks/Bin-Mate/tree/main/RPi%20Pico)"), up to a fully-custom PCB you can self-solder or buy as a kit (Soon™).
 
 ## Current Status
 
-- RPi Pico DIY version works and is "finished".
-- ESP32 DIY version has been prototyped and is next to be published.
+- **DIY Pico version** works and is "finished" (but will get updates as I think of things)
+- **DIY ESP32 version** has been prototyped and is being worked on now (mid 2024)
+- **ESP32 Kit version** will come Soon™
 
 ## Raspberry Pi Pico DIY Version
 
-![Photo of the Pico W Bin-Mate](https://github.com/senwerks/Bin-Mate/blob/main/RPi%20Pico%20Assets/bin-mate-pico.jpeg?raw=true)
+![Photo of the Bin-Mate "DIY Pico" version](https://github.com/senwerks/Bin-Mate/blob/main/RPi%20Pico%20Assets/bin-mate-pico.jpg?raw=true)
 
 #### Ingredients
 This is the easiest way to get started with this project, using just:
@@ -45,6 +46,7 @@ The project now uses PBM files for the graphics. You can do direct-replacement o
 
 ## ESP32 Versions
 
-For a version of the project that can run off a single battery for many months, we're developing both DIY and custom-PCB versions using an ESP32 and utilising all the deepsleep/low-power trickery, along with larger multi-colour e-Paper displays.
+For a version of the project that can run off batteries for many months, we're developing both DIY and custom-PCB versions using an ESP32 and utilising all the deepsleep/low-power trickery, along with larger multi-colour e-Paper displays.
 
 You will be able to order them pre-built, or solder together yourself. Both the DIY and custom-PCB versions have been prototyped and are in progress, and will be published when there's something functional to share.
+
